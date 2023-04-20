@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/server.dockerfile
+    depends_on:
+      - database
+    environment:
+      DATABASE_HOST: database
+      DATABASE_URL: "mongodb://database:$DATABASE_PORT/$DATABASE_NAME"
+    ports:
+      - "$SERVER_PORT:$SERVER_PORT"
+
+  database:
+    image: mongo:5.0
+    environment:
+      MONGO_INITDB_DATABASE: $DATABASE_NAME
+    ports:
+      - "$DATABASE_PORT:$DATABASE_PORT"

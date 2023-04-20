@@ -4,31 +4,29 @@ This codebase contains the code needed to run the backend for Argent Bank.
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 
-Argent Bank uses the following tech stack:
+### Web app
+- [Node v18](https://nodejs.org/en/)
+    - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
 
-- [Node.js v12](https://nodejs.org/en/)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
-
-Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
-
-```bash
-# Check Node.js version
-node --version
-
-# Check Mongo version
-mongo --version
-```
+### Api
+The api provides a [docker compose](https://www.docker.com/products/docker-desktop/) file to simply run it without having to install all services and dependencies.  
+This is the recommended way of running the api, but you can also install everything manually:
+ - [Node v12](https://nodejs.org/en/)
+    - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
 
 ### Instructions
 
 1. Fork this repo
-1. Clone the repo onto your computer
-1. Open a terminal window in the cloned project
-1. Run the following commands:
+2. Clone the repo onto your computer
+3. Open a terminal window in the cloned project
+4. Run the following commands:
 
 ```bash
+# Create environment config file
+cp .env.example .env
+
 # Install dependencies
 npm install
 

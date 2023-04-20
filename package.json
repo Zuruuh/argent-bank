@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev:server": "nodemon ./server.js",
-    "populate-db": "node ./scripts/populateDatabase.js",
-    "server": "node ./server.js"
+    "_server:docker": "docker compose -f apps/server/docker-compose.dev.yaml --env-file .env --project-directory apps/server",
+    "server:build": "npm run _server:docker -- build",
+    "server:dev": "npm run _server:docker up --build",
+    "server:populate-db": "npm run _server:docker exec api npm run populate-db"
   }
 }

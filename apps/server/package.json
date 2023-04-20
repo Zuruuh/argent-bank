@@ -21,7 +21,8 @@
   "scripts": {
     "dev:server": "nodemon ./server.js",
     "populate-db": "node ./scripts/populateDatabase.js",
-    "server": "node ./server.js"
+    "server": "node ./server.js",
+    "docker:build": "docker build -f docker/server.dockerfile --tag zuruh/argent-bank-api ."
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
