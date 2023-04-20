@@ -1,4 +1,7 @@
 import { type FC } from 'react';
+import ChatIcon from './images/icon-chat.png';
+import MoneyIcon from './images/icon-money.png';
+import SecurityIcon from './images/icon-security.png';
 import styles from './Features.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 
@@ -7,11 +10,7 @@ const Features: FC = () => {
     <section className={styles.features}>
       <h2 className={globals.srOnly}>Features</h2>
       <div className={styles.featureItem}>
-        <img
-          src="./images/icon-chat.png"
-          alt="Chat Icon"
-          className={styles.featureIcon}
-        />
+        <img src={ChatIcon} alt="Chat Icon" className={styles.featureIcon} />
         <h3 className={styles.featureItemTitle}>You are our #1 priority</h3>
         <p>
           Need to talk to a representative? You can get in touch through our
@@ -19,11 +18,7 @@ const Features: FC = () => {
         </p>
       </div>
       <div className={styles.featureItem}>
-        <img
-          src="./images/icon-money.png"
-          alt="Money Icon"
-          className={styles.featureIcon}
-        />
+        <img src={MoneyIcon} alt="Money Icon" className={styles.featureIcon} />
         <h3 className={styles.featureItemTitle}>
           More savings means higher rates
         </h3>
@@ -31,7 +26,7 @@ const Features: FC = () => {
       </div>
       <div className={styles.featureItem}>
         <img
-          src="./images/icon-security.png"
+          src={SecurityIcon}
           alt="Security Icon"
           className={styles.featureIcon}
         />
