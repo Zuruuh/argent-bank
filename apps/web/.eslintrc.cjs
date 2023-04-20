@@ -9,14 +9,21 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:jsx-a11y/recommended',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'react-refresh', 'prettier'],
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'jsx-a11y',
+    'react-refresh',
+    'prettier',
+  ],
   rules: {
     'prettier/prettier': ['error'],
     'react/react-in-jsx-scope': ['off'],
@@ -26,5 +33,9 @@ module.exports = {
     react: {
       version: '18.2',
     },
+    linkComponents: [
+      { name: 'Link', linkAttribute: 'to' },
+      { name: 'NavLink', linkAttribute: 'to' },
+    ],
   },
 };
