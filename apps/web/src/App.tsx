@@ -1,9 +1,10 @@
 import { type FC } from 'react';
+import HomePage from '~/pages/HomePage/HomePage';
 
 const App: FC = () => {
   return (
     <>
-      <h1>Hello, World!</h1>
+      <HomePage />
     </>
   );
 };
