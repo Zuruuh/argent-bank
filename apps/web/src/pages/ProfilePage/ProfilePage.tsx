@@ -21,7 +21,7 @@ const mockAccounts: AccountProps[] = [
   },
 ];
 
-const UserPage: FC = () => {
+const ProfilePage: FC = () => {
   return (
     <main className={`${globals.main} ${globals.bgDark}`}>
       <div className={styles.header}>
@@ -40,4 +40,4 @@ const UserPage: FC = () => {
   );
 };
 
-export default UserPage;
+export default ProfilePage;
