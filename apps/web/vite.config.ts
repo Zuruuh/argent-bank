@@ -22,6 +22,11 @@ export default defineConfig({
     environment: 'jsdom',
     silent: false,
     setupFiles: ['./bootstrap.tsx'],
+    css: {
+      modules: {
+        classNameStrategy: 'non-scoped',
+      },
+    },
     coverage: {
       provider: 'c8',
       reporter: 'html',
