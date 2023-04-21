@@ -1,7 +1,9 @@
 version: "3.7"
+name: argent-bank-api
 
 services:
   api:
+    image: zuruh/argent-bank-api:latest
     build:
       context: .
       dockerfile: ./docker/server.dockerfile

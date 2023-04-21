@@ -1,0 +1,41 @@
+name: 🌐 Web Pipeline
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-22.04
+    container:
+      image: zuruh/argent-bank-web-ci:latest
+    steps:
+      ## Setup
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Start API 🖥️
+        run: pnpm run server:start && pnpm run server:seed
+
+      - name: Enter web directory 🗀
+        run: cd apps/web
+
+      - name: Install dependencies 🔧
+        run: pnpm install --frozen-lockfile
+
+      ## Assertions
+
+      - name: Run eslint 🚨
+        run: pnpm run lint:eslint
+
+      - name: Run typescript 🚨
+        run: pnpm run lint:typescript
+
+      - name: Run vitest 🧪
+        run: pnpm run test:coverage
+
+      - name: Upload test coverage artifacts ✅ 
+        uses: romeovs/lcov-reporter-action@v0.2.11
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'

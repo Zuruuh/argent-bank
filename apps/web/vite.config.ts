@@ -30,7 +30,7 @@ export default defineConfig({
     },
     coverage: {
       provider: 'c8',
-      reporter: 'html',
+      reporter: process.env.CI === 'true' ? 'lcov' : 'html',
       reportsDirectory: 'coverage',
       all: true,
       include: glob

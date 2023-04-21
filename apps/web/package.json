@@ -8,11 +8,13 @@
     "build": "tsc && vite build",
     "build:preview": "vite preview",
     "ladle": "ladle dev",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:eslint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:eslint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:typescript": "tsc",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "docker:ci:build": "docker build -f docker/ci.dockerfile --tag zuruh/argent-bank-web-ci ."
   },
   "dependencies": {
     "fontawesome-4.7": "^4.7.0",

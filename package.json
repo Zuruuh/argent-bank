@@ -5,7 +5,8 @@
   "scripts": {
     "_server:docker": "docker compose -f apps/server/docker-compose.dev.yaml --env-file .env --project-directory apps/server",
     "server:build": "npm run _server:docker -- build",
-    "server:dev": "npm run _server:docker up --build",
-    "server:populate-db": "npm run _server:docker exec api npm run populate-db"
+    "server:start": "npm run _server:docker -- up -d",
+    "server:stop": "npm run _server:docker -- down",
+    "server:seed": "npm run _server:docker -- exec api npm run populate-db"
   }
 }
