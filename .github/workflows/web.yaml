@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  tests:
+  CI:
     runs-on: ubuntu-22.04
     container:
       image: zuruh/argent-bank-web-ci:latest
