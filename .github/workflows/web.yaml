@@ -39,5 +39,7 @@ jobs:
 
       - name: Upload test coverage artifacts ✅ 
         uses: romeovs/lcov-reporter-action@v0.2.11
+        if: github.event_name == 'pull_request'
         with:
           github-token: '${{ secrets.GH_TOKEN }}'
+          working-directory: ./apps/web
