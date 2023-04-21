@@ -4,6 +4,10 @@ on:
     branches: [main, dev]
   pull_request:
 
+defaults:
+  run:
+    working-directory: ./apps/web
+
 jobs:
   CI:
     runs-on: ubuntu-22.04
@@ -17,6 +21,7 @@ jobs:
 
       - name: Start API 🖥️
         run: pnpm run server:start && pnpm run server:seed
+        working-directory: ./
 
       - name: Enter web directory 🗀
         run: cd apps/web
