@@ -25,9 +25,11 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'prettier/prettier': ['error'],
-    'react/react-in-jsx-scope': ['off'],
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unused-vars': 'off', // Typescript already handles this
   },
   settings: {
     react: {
