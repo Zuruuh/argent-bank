@@ -7,14 +7,17 @@ This codebase contains the code needed to run the backend for Argent Bank.
 ## Prerequisites
 
 ### Web app
+
 - [Node v18](https://nodejs.org/en/)
-    - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
+  - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
 
 ### Api
+
 The api provides a [docker compose](https://www.docker.com/products/docker-desktop/) file to simply run it without having to install all services and dependencies.  
 This is the recommended way of running the api, but you can also install everything manually:
- - [Node v12](https://nodejs.org/en/)
-    - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
+
+- [Node v12](https://nodejs.org/en/)
+  - (Prefer installation with a tool like [fnm](https://github.com/Schniz/fnm) for dev environment)
 
 ### Instructions
 
@@ -59,7 +62,7 @@ Once you run the `populate-db` script, you should have two users in your databas
 
 ## API Documentation
 
-To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
+To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3000/api-docs
 
 ## Design Assets
 
