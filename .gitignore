@@ -7,4 +7,4 @@ coverage
 /**/node_modules
 config/runtime.yaml
 .DS_Store
-.env
+.env.local

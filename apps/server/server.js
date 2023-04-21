@@ -6,7 +6,7 @@ const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger.yaml')
 const dbConnection = require('./database/connection')
 
-dotEnv.config({path: '../../.env'})
+dotEnv.config({path: '../../.env.local'})
 
 const app = express()
 const PORT = process.env.SERVER_PORT || 3001
