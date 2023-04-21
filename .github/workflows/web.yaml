@@ -23,9 +23,6 @@ jobs:
         run: pnpm run server:start && pnpm run server:seed
         working-directory: ./
 
-      - name: Enter web directory 🗀
-        run: cd apps/web
-
       - name: Install dependencies 🔧
         run: pnpm install --frozen-lockfile
 
