@@ -4,6 +4,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import glob from 'fast-glob';
 
 export default defineConfig({
   plugins: [react()],
@@ -32,14 +33,16 @@ export default defineConfig({
       reporter: 'html',
       reportsDirectory: 'coverage',
       all: true,
-      include: [
-        'src/**/*.tsx',
-        '!src/**/*.stories.tsx',
-        '!src/pages', // Pages should be tested in e2e
-        '!!src/pages/**/components/**/*.tsx',
-        '!src/**/index.ts', // useless to test re-exporters
-        '!src/{App,main}.tsx', // Tested in e2e
-      ],
+      include: glob
+        .sync('src/**/*.tsx')
+        .filter(
+          (file) =>
+            !file.match(/src\/(App|main)\.tsx$/gi) &&
+            !file.match(/^.*\.stories\.tsx$/gi) &&
+            !file.match(/^.*\.spec\.tsx$/gi) &&
+            !file.match(/^src\/pages\/[^/.]+\/[^/.]+\.(config\.)?tsx$/gi) &&
+            !file.match(/^src\/shared\/ladle/gi)
+        ),
     },
   },
 });
