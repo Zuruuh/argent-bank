@@ -38,4 +38,4 @@ jobs:
       - name: Upload test coverage artifacts ✅ 
         uses: romeovs/lcov-reporter-action@v0.2.11
         with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          github-token: '${{ secrets.GH_TOKEN }}'
