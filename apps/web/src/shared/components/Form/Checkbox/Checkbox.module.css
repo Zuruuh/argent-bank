@@ -1,0 +1,7 @@
+.input-checkbox {
+  display: flex;
+}
+
+.input-checkbox-label {
+  margin-left: 0.25rem;
+}
