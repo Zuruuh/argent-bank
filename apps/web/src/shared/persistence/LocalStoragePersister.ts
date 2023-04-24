@@ -1,4 +1,4 @@
-import type { PersisterInterface } from './PersisterInterface';
+import type { PersisterInterface } from './PersisterInterface.d';
 
 export const LocalStoragePersister: PersisterInterface = {
   has(key) {

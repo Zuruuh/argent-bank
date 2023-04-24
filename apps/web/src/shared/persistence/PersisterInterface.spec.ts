@@ -7,7 +7,7 @@ import {
   test,
 } from 'vitest';
 import { providerPersister } from './PersisterProvider';
-import { type PersisterInterface } from './PersisterInterface';
+import { type PersisterInterface } from './PersisterInterface.d';
 import { z } from 'zod';
 
 const persister = providerPersister();
@@ -60,7 +60,7 @@ describe('Local Storage implementation', async () => {
     expect(persister.has('something')).toBeFalsy();
   });
 
-  test('The persister returns an implementation of PersisterInterface', async () => {
+  test('The persister returns an implementation of PersisterInterface.d', async () => {
     assertType<PersisterInterface>(persister);
     expectTypeOf(persister.clear).toBeFunction();
     expectTypeOf(persister.get).toBeFunction();

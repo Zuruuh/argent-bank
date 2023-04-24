@@ -38,6 +38,7 @@ export default defineConfig({
         .filter(
           (file) =>
             !file.match(/index\.ts$/gi) &&
+            !file.match(/.*\.d\.ts$/gi) &&
             !file.match(/src\/(App|main)\.tsx?$/gi) &&
             !file.match(/^.*\.stories\.tsx?$/gi) &&
             !file.match(/^.*\.spec\.tsx?$/gi) &&
