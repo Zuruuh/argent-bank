@@ -1,5 +1,5 @@
 import HomePage from './HomePage';
-import type { PageConfig } from '~/shared/type/PageConfig';
+import type { PageConfig } from '~/shared/types/PageConfig';
 
 export const HomePageConfig = {
   element: <HomePage />,

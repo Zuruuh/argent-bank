@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import Account, { type AccountProps } from './components/Account';
-import styles from './UserPage.module.css';
+import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 
 const mockAccounts: AccountProps[] = [

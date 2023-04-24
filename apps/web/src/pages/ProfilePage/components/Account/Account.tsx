@@ -14,7 +14,13 @@ const Account: FC<AccountProps> = ({ name, count, amount }) => {
         <h3 className={styles.accountTitle}>
           {name} (x{count})
         </h3>
-        <p className={styles.accountAmount}>${amount}</p>
+        <p className={styles.accountAmount}>
+          {amount.toLocaleString('en', {
+            currency: 'usd',
+            style: 'currency',
+            maximumFractionDigits: 2,
+          })}
+        </p>
         <p className={styles.accountAmountDescription}>Available Balance</p>
       </div>
       <div className={`${styles.accountContentWrapperCta}`}>

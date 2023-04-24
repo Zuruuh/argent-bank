@@ -10,5 +10,5 @@ test('It works', async () => {
   expect(title).to.have.text('test (x10)');
 
   const amount = element.querySelector('.accountAmount')!;
-  expect(amount).to.have.text('$5');
+  expect(amount).to.have.text('$5.00');
 });

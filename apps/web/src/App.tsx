@@ -1,10 +1,12 @@
 import { type FC } from 'react';
 import { RouterProvider } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
-import { HomePageConfig } from '~/pages/HomePage';
-import { SignInPageConfig } from '~/pages/SignInPage';
-import { ProfilePageConfig } from '~/pages/ProfilePage/ProfilePage.config';
-import Layout from '~/shared/components/Layout';
+import { HomePageConfig } from './pages/HomePage';
+import { SignInPageConfig } from './pages/SignInPage';
+import { ProfilePageConfig } from './pages/ProfilePage/ProfilePage.config';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './shared/store';
+import Layout from './shared/components/Layout';
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,11 @@ const router = createBrowserRouter([
 ]);
 
 const App: FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <ReduxProvider store={store}>
+      <RouterProvider router={router} />
+    </ReduxProvider>
+  );
 };
 
 export default App;
