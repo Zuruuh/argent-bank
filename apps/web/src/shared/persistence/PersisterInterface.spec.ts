@@ -6,11 +6,11 @@ import {
   expectTypeOf,
   test,
 } from 'vitest';
-import { providerPersister } from './PersisterProvider';
+import { providePersister } from './providePersister';
 import { type PersisterInterface } from './PersisterInterface.d';
 import { z } from 'zod';
 
-const persister = providerPersister();
+const persister = providePersister();
 
 describe('Local Storage implementation', async () => {
   afterEach(() => {
@@ -36,6 +36,9 @@ describe('Local Storage implementation', async () => {
       const item = persister.get('key', z.string());
 
       expect(item.success).toBeTruthy();
+      if (item.success) {
+        expect(item.data).toBe('something');
+      }
     });
   });
 

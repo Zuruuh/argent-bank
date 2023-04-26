@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '~/shared/models/User';
-import { providerPersister } from '~/shared/persistence/PersisterProvider';
+import { providePersister } from '~/shared/persistence/providePersister';
 import { z } from 'zod';
 
-const persister = providerPersister();
+const persister = providePersister();
 const token = persister.get('token', z.string());
 
 export interface AuthState {
@@ -11,7 +11,7 @@ export interface AuthState {
   token?: string;
   user?: User;
   error?: string;
-  success: boolean;
+  success?: boolean;
 }
 
 export const authStore = createSlice({
@@ -19,7 +19,7 @@ export const authStore = createSlice({
   initialState: {
     loading: false,
     token: token.success ? token.data : undefined,
-  } as AuthState,
+  } satisfies AuthState,
   reducers: {},
 });
 

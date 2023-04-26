@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginSchema } from '~/shared/feature/auth/schema/LoginSchema';
-import { providerPersister } from '~/shared/persistence/PersisterProvider';
+import { providePersister } from '~/shared/persistence/providePersister';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk(
       body: { token },
     } = body;
 
-    const persister = providerPersister();
+    const persister = providePersister();
     persister.set('token', token);
 
     return token;

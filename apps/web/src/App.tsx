@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePageConfig } from './pages/HomePage';
 import { SignInPageConfig } from './pages/SignInPage';
-import { ProfilePageConfig } from './pages/ProfilePage/ProfilePage.config';
+import { ProfilePageConfig } from './pages/ProfilePage';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './shared/store';
 import Layout from './shared/components/Layout';
