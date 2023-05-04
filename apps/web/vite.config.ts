@@ -1,13 +1,18 @@
-/// <reference types="node" />
 /// <reference types="vitest" />
+/// <reference types="./src/definitions/vite-plugin-react-remove-attributes.d.ts" />
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import glob from 'fast-glob';
+import removeTestIdPlugin from 'vite-plugin-react-remove-attributes';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    removeTestIdPlugin.default({ attributes: ['data-testid'] }),
+  ],
+  envDir: '../../',
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src'),
@@ -25,6 +30,7 @@ export default defineConfig({
     setupFiles: ['./bootstrap.tsx'],
     css: {
       modules: {
+        // TODO: remove
         classNameStrategy: 'non-scoped',
       },
     },

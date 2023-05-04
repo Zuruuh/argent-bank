@@ -5,6 +5,14 @@
   margin-bottom: 1rem;
 }
 
+.has-error .input {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+}
+
 .input-label {
   font-weight: bold;
 }
