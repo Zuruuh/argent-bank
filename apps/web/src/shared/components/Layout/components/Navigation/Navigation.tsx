@@ -5,12 +5,13 @@ import globals from '~/shared/assets/styles/globals.module.css';
 import { HomePageConfig } from '~/pages/HomePage';
 import { SignInPageConfig } from '~/pages/SignInPage';
 import { NavLink } from 'react-router-dom';
+import clsx from 'clsx';
 
 const Navigation: FC = () => {
   return (
     <nav className={styles.navigation}>
       <NavLink
-        className={`${styles.link} ${styles.linkLogo}`}
+        className={clsx(styles.link, styles.linkLogo)}
         to={HomePageConfig.path}
       >
         <img
@@ -23,9 +24,9 @@ const Navigation: FC = () => {
       <div>
         <NavLink
           className={({ isActive }) =>
-            `${styles.link} ${styles.navigationItem} ${
-              isActive ? styles.activeLink : ''
-            }`
+            clsx(styles.link, styles.navigationItem, {
+              [styles.activeLink]: isActive,
+            })
           }
           to={SignInPageConfig.path}
         >

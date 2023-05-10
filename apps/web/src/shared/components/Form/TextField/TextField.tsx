@@ -1,20 +1,14 @@
-import { useId, type FC, type HTMLInputTypeAttribute, useEffect } from 'react';
+import { useId, type FC, type HTMLInputTypeAttribute } from 'react';
 import styles from './TextField.module.css';
 import formstyles from '../Form.module.css';
-import {
-  type UseFormReturn,
-  type UseFormRegisterReturn,
-} from 'react-hook-form';
-import { clsx } from 'clsx';
+import { useFormContext, type UseFormRegisterReturn } from 'react-hook-form';
+import clsx from 'clsx';
 
 interface TextFieldProps {
   label: string;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   autocomplete?: string;
-  // We can't use generics here and nothing I've tried works
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: UseFormReturn<any>;
   formData: UseFormRegisterReturn;
 }
 
@@ -23,10 +17,10 @@ const TextField: FC<TextFieldProps> = ({
   type = 'text',
   placeholder,
   autocomplete,
-  form,
   formData,
 }) => {
   const fieldId = useId();
+  const form = useFormContext();
 
   const errors = form.formState.errors[formData.name];
   const hasError = errors !== undefined && errors.message !== undefined;

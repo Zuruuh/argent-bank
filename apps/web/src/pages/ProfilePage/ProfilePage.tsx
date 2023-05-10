@@ -2,6 +2,7 @@ import { type FC } from 'react';
 import Account, { type AccountProps } from './components/Account';
 import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
+import clsx from 'clsx';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -23,7 +24,7 @@ const mockAccounts: AccountProps[] = [
 
 const ProfilePage: FC = () => {
   return (
-    <main className={`${globals.main} ${globals.bgDark}`}>
+    <main className={clsx(globals.main, globals.bgDark)}>
       <div className={styles.header}>
         <h1>
           Welcome back

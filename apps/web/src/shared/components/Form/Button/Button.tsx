@@ -7,10 +7,10 @@ export interface ButtonProps {
   disabled?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ label, loading: _, disabled }) => {
+const Button: FC<ButtonProps> = ({ label, loading, disabled }) => {
   return (
-    <button disabled={disabled} className={styles.button}>
-      {label}
+    <button disabled={disabled || loading} className={styles.button}>
+      {loading ? <i className="fa fa-spinner fa-spin fa-lg"></i> : <>{label}</>}
     </button>
   );
 };

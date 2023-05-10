@@ -1,17 +1,12 @@
 /// <reference types="vitest" />
-/// <reference types="./src/definitions/vite-plugin-react-remove-attributes.d.ts" />
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import glob from 'fast-glob';
-import removeTestIdPlugin from 'vite-plugin-react-remove-attributes';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    removeTestIdPlugin.default({ attributes: ['data-testid'] }),
-  ],
+  plugins: [react()],
   envDir: '../../',
   resolve: {
     alias: {

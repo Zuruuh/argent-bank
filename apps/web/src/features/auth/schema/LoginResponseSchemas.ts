@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const LoginValidResponseSchema = z.object({
+export const LoginResponseSchema = z.object({
   status: z.literal(200),
   message: z.string(),
   body: z.object({
@@ -8,11 +8,4 @@ export const LoginValidResponseSchema = z.object({
   }),
 });
 
-export type LoginValidResponse = z.infer<typeof LoginValidResponseSchema>;
-
-export const LoginErrorResponseSchema = z.object({
-  status: z.literal(400),
-  message: z.string(),
-});
-
-export type LoginErrorResponse = z.infer<typeof LoginErrorResponseSchema>;
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
