@@ -1,5 +1,4 @@
-version: "3.7"
-name: argent-bank-api
+version: "3"
 
 services:
   api:
