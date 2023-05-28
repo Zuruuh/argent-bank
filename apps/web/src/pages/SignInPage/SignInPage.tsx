@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import { ReduxWrappedInvalidResponseSchema } from '~/shared/schema/InvalidResponseSchema';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '~/shared/hooks/storeHooks';
+import { ProfilePageConfig } from '../ProfilePage';
 
 const SignInPage: FC = () => {
   const form = useForm<LoginBody>({
@@ -32,7 +33,7 @@ const SignInPage: FC = () => {
       try {
         const response = await doLogin(body).unwrap();
         dispatch(setToken(response.body.token));
-        navigate('/');
+        navigate(ProfilePageConfig.path);
       } catch (e: unknown) {
         const error = ReduxWrappedInvalidResponseSchema.safeParse(e);
         if (!error.success) {
