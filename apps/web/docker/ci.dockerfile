@@ -4,4 +4,4 @@ RUN apk add --update \
     git \
     docker-cli \
     docker-cli-compose && \
-    npm i -g pnpm@^8
+    npm i -g pnpm@^8.6.0
