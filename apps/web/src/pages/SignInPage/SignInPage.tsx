@@ -11,7 +11,7 @@ import {
   LoginBodySchema,
   type LoginBody,
 } from '~/features/auth/schema/LoginBodySchema';
-import { setUser, setToken } from '~/features/auth/slices/AuthSlice';
+import { setToken } from '~/features/auth/slices/AuthSlice';
 import clsx from 'clsx';
 import { ReduxWrappedInvalidResponseSchema } from '~/shared/schema/InvalidResponseSchema';
 import { useNavigate } from 'react-router';
