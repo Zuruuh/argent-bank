@@ -1,16 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { AuthApi } from '~/features/auth/api/AuthApi';
+import { rememberEnhancer, rememberReducer } from 'redux-remember';
+import { AuthApiSlice } from '~/features/auth/api/AuthApiSlice';
 import AuthSlice from '~/features/auth/slices/AuthSlice';
+import { AuthenticatedApiSlice } from './slices/AuthenticatedApiSlice';
+
+const reducers = {
+  [AuthenticatedApiSlice.reducerPath]: AuthenticatedApiSlice.reducer,
+  auth: AuthSlice,
+};
+
+const persistedKeys: (keyof typeof reducers)[] = ['auth'];
 
 export const store = configureStore({
-  reducer: {
-    [AuthApi.reducerPath]: AuthApi.reducer,
-    auth: AuthSlice,
-  },
+  reducer: rememberReducer(reducers),
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(AuthApi.middleware),
+    getDefaultMiddleware().concat(AuthApiSlice.middleware),
   devTools: import.meta.env.DEV,
+  enhancers: [
+    rememberEnhancer(localStorage, persistedKeys, { persistWholeStore: true }),
+  ],
 });
 
 setupListeners(store.dispatch);

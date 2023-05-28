@@ -1,10 +1,7 @@
 import { z } from 'zod';
+import { BaseResponseSchema } from './BaseResponseSchema';
 
-export const InvalidResponseSchema = z.object({
-  message: z.string(),
-  status: z.number(),
-});
-
+export const InvalidResponseSchema = BaseResponseSchema;
 export type InvalidResponse = z.infer<typeof InvalidResponseSchema>;
 
 export const ReduxWrappedInvalidResponseSchema = z.object({

@@ -1,7 +1,7 @@
 import { useCallback, type FC } from 'react';
 import { useForm, type SubmitHandler, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLoginMutation } from '~/features/auth/api/AuthApi';
+import { useLoginMutation } from '~/features/auth/api/AuthApiSlice';
 import TextField from '~/shared/components/Form/TextField';
 import Checkbox from '~/shared/components/Form/Checkbox';
 import styles from './SignInPage.module.css';
@@ -11,25 +11,28 @@ import {
   LoginBodySchema,
   type LoginBody,
 } from '~/features/auth/schema/LoginBodySchema';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '~/features/auth/slices/AuthSlice';
+import { setUser, setToken } from '~/features/auth/slices/AuthSlice';
 import clsx from 'clsx';
 import { ReduxWrappedInvalidResponseSchema } from '~/shared/schema/InvalidResponseSchema';
 import { useNavigate } from 'react-router';
+import { useAppDispatch } from '~/shared/hooks/storeHooks';
 
 const SignInPage: FC = () => {
   const form = useForm<LoginBody>({
     resolver: zodResolver(LoginBodySchema),
+    mode: 'onTouched',
   });
+
   const [doLogin, res] = useLoginMutation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginBody> = useCallback(
     async (body) => {
       try {
         const response = await doLogin(body).unwrap();
-        dispatch(setCredentials({ token: response.body.token }));
+        dispatch(setToken(response.body.token));
+        navigate('/');
       } catch (e: unknown) {
         const error = ReduxWrappedInvalidResponseSchema.safeParse(e);
         if (!error.success) {
@@ -39,7 +42,7 @@ const SignInPage: FC = () => {
         }
 
         // Really bad way to determine which field has an error,
-        // But api resposne is really badly designed so this is the only option,
+        // But api response is really badly designed so this is the only option,
         // apart from adding all error messages to root
 
         const message =
@@ -57,8 +60,6 @@ const SignInPage: FC = () => {
 
         return;
       }
-
-      navigate('/');
     },
     [doLogin, dispatch, form, navigate]
   );
