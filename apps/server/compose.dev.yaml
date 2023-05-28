@@ -1,5 +1,4 @@
-version: "3.7"
-name: argent-bank-api
+version: "3"
 
 services:
   api:
@@ -17,6 +16,12 @@ services:
 
   database:
     image: mongo:5.0
+    healthcheck:
+      test: mongo --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
+      interval: 1s
+      retries: 15
+      start_period: 5s
+      timeout: 10s
     environment:
       MONGO_INITDB_DATABASE: $DATABASE_NAME
     ports:

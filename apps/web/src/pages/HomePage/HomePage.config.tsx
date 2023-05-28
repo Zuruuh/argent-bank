@@ -1,8 +1,14 @@
-import HomePage from './HomePage';
-import type { PageConfig } from '~/shared/type/PageConfig';
+import { Suspense, lazy } from 'react';
+import type { PageConfig } from '~/shared/types/PageConfig.d';
+
+const HomePage = lazy(() => import('./HomePage'));
 
 export const HomePageConfig = {
-  element: <HomePage />,
   index: true,
   path: '/',
-} as PageConfig;
+  element: (
+    <Suspense fallback={<p>Loading...</p>}>
+      <HomePage />
+    </Suspense>
+  ),
+} satisfies PageConfig;

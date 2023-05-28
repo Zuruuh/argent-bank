@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /// <reference types="vitest" />
 
 import { defineConfig } from 'vite';
@@ -8,6 +7,7 @@ import glob from 'fast-glob';
 
 export default defineConfig({
   plugins: [react()],
+  envDir: '../../',
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src'),
@@ -25,6 +25,7 @@ export default defineConfig({
     setupFiles: ['./bootstrap.tsx'],
     css: {
       modules: {
+        // TODO: remove
         classNameStrategy: 'non-scoped',
       },
     },
@@ -34,13 +35,15 @@ export default defineConfig({
       reportsDirectory: 'coverage',
       all: true,
       include: glob
-        .sync('src/**/*.tsx')
+        .sync('src/**/*.{tsx,ts}')
         .filter(
           (file) =>
-            !file.match(/src\/(App|main)\.tsx$/gi) &&
-            !file.match(/^.*\.stories\.tsx$/gi) &&
-            !file.match(/^.*\.spec\.tsx$/gi) &&
-            !file.match(/^src\/pages\/[^/.]+\/[^/.]+\.(config\.)?tsx$/gi) &&
+            !file.match(/index\.ts$/gi) &&
+            !file.match(/.*\.d\.ts$/gi) &&
+            !file.match(/src\/(App|main)\.tsx?$/gi) &&
+            !file.match(/^.*\.stories\.tsx?$/gi) &&
+            !file.match(/^.*\.spec\.tsx?$/gi) &&
+            !file.match(/^src\/pages\/[^/.]+\/[^/.]+\.(config\.)?tsx?$/gi) &&
             !file.match(/^src\/shared\/ladle/gi)
         ),
     },

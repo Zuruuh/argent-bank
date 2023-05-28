@@ -1,0 +1,179 @@
+openapi: "3.0.3"
+info:
+  title: "My OpenAPI Spec"
+  version: "0.0.1"
+
+servers:
+  - url: "http://localhost:3000"
+
+tags:
+  - name: "Transactions"
+
+paths:
+  /api/v1/transactions/current-month:
+    get:
+      description: "Find all the transactions for the current month"
+      tags: ["Transactions"]
+      security: [BearerAuth: []]
+      responses:
+        "200":
+          description: "The transactions"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/object.transaction" 
+
+  /api/v1/transactions:
+    get:
+      description: "Find all the transactions"
+      tags: ["Transactions"]
+      security: [BearerAuth: []]
+      responses:
+        "200":
+          description: "The transactions"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/object.transaction"
+
+    post:
+      description: "Create a new"
+      tags: ["Transactions"]
+      security: [BearerAuth: []]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                amount:
+                  $ref: "#/components/schemas/property.amount"
+                date:
+                  $ref: "#/components/schemas/property.date"
+      responses:
+        "201":
+          description: "Creation successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/object.transaction"
+        "400":
+          description: "Validation errors"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  errors:
+                    type: "object"  
+                    additionalProperties:
+                      type: "array"
+                      items:
+                        type: "string"
+
+  /api/v1/transactions/{transaction_id}:
+    delete:
+      description: "Delete a transaction by it's id"
+      security: [BearerAuth: []]
+      tags: ["Transactions"]
+      parameters:
+        - name: "transaction_id"
+          in: "path"
+          required: true
+          schema:
+            $ref: "#/components/schemas/property.id"
+      responses:
+        "204":
+          description: "Deletion successful"
+        "404":
+          description: "Not found"
+
+    get:
+      description: "Find a transaction by it's id"
+      security: [BearerAuth: []]
+      tags: ["Transactions"]
+      parameters:
+        - name: "transaction_id"
+          in: "path"
+          required: true
+          schema:
+            $ref: "#/components/schemas/property.id"
+      responses:
+        "200":
+          description: "The transaction"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/object.transaction"
+        "404":
+          description: "Not found"
+
+    put:
+      description: "Update a transaction by it's id"
+      security: [BearerAuth: []]
+      tags: ["Transactions"]
+      parameters:
+        - name: "transaction_id"
+          in: "path"
+          required: true
+          schema:
+            $ref: "#/components/schemas/property.id"
+      responses:
+        "200":
+          description: "Update successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/object.transaction"
+        "404":
+          description: "Not found"
+        "400":
+          description: "Validation errors"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  errors:
+                    type: "object"  
+                    additionalProperties:
+                      type: "array"
+                      items:
+                        type: "string"
+
+components:
+  schemas:
+    ## Properties
+    property.amount:
+      type: "number"
+      description: "A money amount in cents"
+      example: 1799
+    property.date:
+      type: "string"
+      description: "The date in ISO-8601 format"
+      example: "2023-01-01T12:00:00+0100"
+    property.id:
+      type: "string"
+      description: "An object's unique id (ulid) in rfc-4122 format"
+      example: "017eb31e-1440-b69e-d82f-5f0937f823c8"
+
+    ## Objects
+    object.transaction:
+      type: "object"
+      properties:
+        id:
+          $ref: "#/components/schemas/property.id"
+        amount:
+          $ref: "#/components/schemas/property.amount"
+        date:
+          $ref: "#/components/schemas/property.date"
+
+  securitySchemes:
+    BearerAuth:
+      scheme: bearer
+      type: http
+

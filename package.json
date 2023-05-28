@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "_server:docker": "docker compose -f apps/server/docker-compose.dev.yaml --env-file .env --project-directory apps/server",
+    "_server:docker": "docker compose -f apps/server/compose.dev.yaml --env-file .env --project-directory apps/server",
     "server:build": "npm run _server:docker -- build",
-    "server:start": "npm run _server:docker -- up -d",
+    "server:start": "npm run _server:docker -- up -d --wait --quiet-pull",
     "server:stop": "npm run _server:docker -- down",
     "server:seed": "npm run _server:docker -- exec api npm run populate-db"
   }

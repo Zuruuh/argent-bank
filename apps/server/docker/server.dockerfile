@@ -9,7 +9,7 @@ WORKDIR /srv
 ## and not whenever the server code changes
 COPY package-lock.json package.json /srv/
 
-RUN npm install
+RUN npm ci
 
 COPY . /srv/
 
