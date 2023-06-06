@@ -7,6 +7,7 @@ import { AuthenticatedApiSlice } from './slices/AuthenticatedApiSlice';
 
 const reducers = {
   [AuthenticatedApiSlice.reducerPath]: AuthenticatedApiSlice.reducer,
+  [AuthApiSlice.reducerPath]: AuthApiSlice.reducer,
   auth: AuthSlice,
 };
 
@@ -15,7 +16,9 @@ const persistedKeys: (keyof typeof reducers)[] = ['auth'];
 export const store = configureStore({
   reducer: rememberReducer(reducers),
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(AuthApiSlice.middleware),
+    getDefaultMiddleware()
+      .concat(AuthApiSlice.middleware)
+      .concat(AuthenticatedApiSlice.middleware),
   devTools: import.meta.env.DEV,
   enhancers: [
     rememberEnhancer(localStorage, persistedKeys, { persistWholeStore: true }),

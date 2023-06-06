@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  ProfileResponse,
-  ProfileResponseSchema,
-} from '../schema/ProfileResponseSchema';
+import { ProfileResponseSchema } from '../schema/ProfileResponseSchema';
+import { User } from '../models/User';
 
 export const AuthenticatedApiSlice = createApi({
   reducerPath: 'authenticated.api',
@@ -20,10 +18,11 @@ export const AuthenticatedApiSlice = createApi({
   }),
   tagTypes: ['_self'],
   endpoints: (builder) => ({
-    profile: builder.query<ProfileResponse, Record<string, never>>({
-      query: () => '/user/profile',
+    profile: builder.query<User, Record<string, never>>({
+      query: () => ({ url: '/api/v1/user/profile', method: 'POST' }),
       providesTags: ['_self'],
-      transformResponse: (response) => ProfileResponseSchema.parse(response),
+      transformResponse: (response) =>
+        ProfileResponseSchema.parse(response).body,
     }),
   }),
 });
