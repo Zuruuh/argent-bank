@@ -5,6 +5,7 @@ import {
 } from '../schema/LoginResponseSchemas';
 import { LoginBody } from '../schema/LoginBodySchema';
 import { AuthenticatedApiSlice } from '~/shared/slices/AuthenticatedApiSlice';
+import { setToken } from '../slices/AuthSlice';
 
 export const AuthApiSlice = createApi({
   reducerPath: 'auth.api',
@@ -19,10 +20,17 @@ export const AuthApiSlice = createApi({
         body,
       }),
       transformResponse: (response) => LoginResponseSchema.parse(response),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-
-        dispatch(AuthenticatedApiSlice.util.invalidateTags(['_self']));
+      onQueryStarted(_, context) {
+        context.queryFulfilled
+          .then((response) => {
+            context.dispatch(setToken(response.data.body.token));
+            context.dispatch(
+              AuthenticatedApiSlice.util.invalidateTags(['_self'])
+            );
+          })
+          .catch(() => {
+            /* noop */
+          });
       },
     }),
   }),

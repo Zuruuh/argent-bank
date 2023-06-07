@@ -3,6 +3,8 @@ import Account, { type AccountProps } from './components/Account';
 import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 import clsx from 'clsx';
+import { PrivateRoute } from '~/shared/guards/PrivateRoute';
+import { useProfileQuery } from '~/shared/slices/AuthenticatedApiSlice';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -23,21 +25,25 @@ const mockAccounts: AccountProps[] = [
 ];
 
 const ProfilePage: FC = () => {
+  const { data: profile } = useProfileQuery({}, {});
+
   return (
-    <main className={clsx(globals.main, globals.bgDark)}>
-      <div className={styles.header}>
-        <h1>
-          Welcome back
-          <br />
-          Tony Jarvis!
-        </h1>
-        <button className={styles.editButton}>Edit Name</button>
-      </div>
-      <h2 className={globals.srOnly}>Accounts</h2>
-      {mockAccounts.map((account, i) => (
-        <Account {...account} key={i} />
-      ))}
-    </main>
+    <PrivateRoute>
+      <main className={clsx(globals.main, globals.bgDark)}>
+        <div className={styles.header}>
+          <h1>
+            Welcome back
+            <br />
+            {profile?.firstName} {profile?.lastName}!
+          </h1>
+          <button className={styles.editButton}>Edit Name</button>
+        </div>
+        <h2 className={globals.srOnly}>Accounts</h2>
+        {mockAccounts.map((account, i) => (
+          <Account {...account} key={i} />
+        ))}
+      </main>
+    </PrivateRoute>
   );
 };
 

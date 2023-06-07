@@ -11,11 +11,9 @@ import {
   LoginBodySchema,
   type LoginBody,
 } from '~/features/auth/schema/LoginBodySchema';
-import { setToken } from '~/features/auth/slices/AuthSlice';
 import clsx from 'clsx';
 import { ReduxWrappedInvalidResponseSchema } from '~/shared/schema/InvalidResponseSchema';
 import { useNavigate } from 'react-router';
-import { useAppDispatch } from '~/shared/hooks/storeHooks';
 import { ProfilePageConfig } from '../ProfilePage';
 
 const SignInPage: FC = () => {
@@ -25,44 +23,48 @@ const SignInPage: FC = () => {
   });
 
   const [doLogin, res] = useLoginMutation();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginBody> = useCallback(
     async (body) => {
-      try {
-        const response = await doLogin(body).unwrap();
-        dispatch(setToken(response.body.token));
+      const result = await doLogin(body);
+      if ('data' in result) {
         navigate(ProfilePageConfig.path);
-      } catch (e: unknown) {
-        const error = ReduxWrappedInvalidResponseSchema.safeParse(e);
-        if (!error.success) {
-          console.error(`Could not parse response returned from API: `, e);
 
-          return;
-        }
+        return;
+      }
 
-        // Really bad way to determine which field has an error,
-        // But api response is really badly designed so this is the only option,
-        // apart from adding all error messages to root
-
-        const message =
-          (
-            {
-              'Error: User not found!': 'email',
-              'Error: Password is invalid': 'password',
-            } as const
-          )[error.data.data.message] ?? 'root';
-        form.setError(
-          message,
-          { message: error.data.data.message },
-          { shouldFocus: true }
+      const error = ReduxWrappedInvalidResponseSchema.safeParse(result.error);
+      if (!error.success) {
+        console.error(
+          `Could not parse response returned from API: `,
+          result.error
         );
 
         return;
       }
+
+      // Really bad way to determine which field has an error,
+      // But api response is really badly designed so this is the only option,
+      // apart from adding all error messages to root
+
+      const field =
+        (
+          {
+            'Error: User not found!': 'email',
+            'Error: Password is invalid': 'password',
+          } as const
+        )[error.data.data.message] ?? 'root';
+
+      form.setError(
+        field,
+        { message: error.data.data.message },
+        { shouldFocus: true }
+      );
+
+      return;
     },
-    [doLogin, dispatch, form, navigate]
+    [doLogin, form, navigate]
   );
 
   return (

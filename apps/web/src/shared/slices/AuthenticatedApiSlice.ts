@@ -19,7 +19,10 @@ export const AuthenticatedApiSlice = createApi({
   tagTypes: ['_self'],
   endpoints: (builder) => ({
     profile: builder.query<User, Record<string, never>>({
-      query: () => ({ url: '/api/v1/user/profile', method: 'POST' }),
+      query: () => ({
+        url: '/api/v1/user/profile',
+        method: 'POST',
+      }),
       providesTags: ['_self'],
       transformResponse: (response) =>
         ProfileResponseSchema.parse(response).body,
