@@ -4,10 +4,10 @@ import {
   LoginResponseSchema,
 } from '../schema/LoginResponseSchemas';
 import { LoginBody } from '../schema/LoginBodySchema';
-import { AuthenticatedApiSlice } from '~/shared/slices/AuthenticatedApiSlice';
-import { setToken } from '../slices/AuthSlice';
+import { setToken } from '../slices/TokenSlice';
+import { clearProfileCache } from '~/shared/slices/user/ProfileApiSlice';
 
-export const AuthApiSlice = createApi({
+export const LoginApiSlice = createApi({
   reducerPath: 'auth.api',
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -24,9 +24,7 @@ export const AuthApiSlice = createApi({
         context.queryFulfilled
           .then((response) => {
             context.dispatch(setToken(response.data.body.token));
-            context.dispatch(
-              AuthenticatedApiSlice.util.invalidateTags(['_self'])
-            );
+            context.dispatch(clearProfileCache());
           })
           .catch(() => {
             /* noop */
@@ -36,4 +34,4 @@ export const AuthApiSlice = createApi({
   }),
 });
 
-export const { useLoginMutation } = AuthApiSlice;
+export const { useLoginMutation } = LoginApiSlice;

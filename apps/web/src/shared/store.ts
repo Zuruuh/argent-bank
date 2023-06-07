@@ -1,23 +1,26 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rememberEnhancer, rememberReducer } from 'redux-remember';
-import { AuthApiSlice } from '~/features/auth/api/AuthApiSlice';
-import AuthSlice from '~/features/auth/slices/AuthSlice';
+import { LoginApiSlice } from '~/shared/auth/api/LoginApiSlice';
+import { TokenSlice } from '~/shared/auth/slices/TokenSlice';
 import { AuthenticatedApiSlice } from './slices/AuthenticatedApiSlice';
+import { ProfileApiSlice } from './slices/user/ProfileApiSlice';
 
 const reducers = {
-  [AuthenticatedApiSlice.reducerPath]: AuthenticatedApiSlice.reducer,
-  [AuthApiSlice.reducerPath]: AuthApiSlice.reducer,
-  auth: AuthSlice,
+  // [AuthenticatedApiSlice.reducerPath]: AuthenticatedApiSlice.reducer,
+  [LoginApiSlice.reducerPath]: LoginApiSlice.reducer,
+  [TokenSlice.name]: TokenSlice.reducer,
+  [ProfileApiSlice.reducerPath]: ProfileApiSlice.reducer,
 };
 
-const persistedKeys: (keyof typeof reducers)[] = ['auth'];
+const persistedKeys: (keyof typeof reducers)[] = [TokenSlice.name];
 
 export const store = configureStore({
-  reducer: rememberReducer(reducers),
+  // Need to "hack" this type bcz if we don't `RootState` will be of type `any` :/
+  reducer: rememberReducer(reducers) as unknown as typeof reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(AuthApiSlice.middleware)
+      .concat(LoginApiSlice.middleware)
       .concat(AuthenticatedApiSlice.middleware),
   devTools: import.meta.env.DEV,
   enhancers: [

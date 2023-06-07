@@ -1,14 +1,14 @@
 import { type FC, type ReactNode, useEffect, useState } from 'react';
-import { useProfileQuery } from '../slices/AuthenticatedApiSlice';
 import { useNavigate } from 'react-router';
 import { SignInPageConfig } from '~/pages/SignInPage';
+import { useProfileQuery } from '../slices/user/ProfileApiSlice';
 
 export interface PrivateRouteProps {
   children: ReactNode;
 }
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
-  const profile = useProfileQuery({}, {});
+  const profile = useProfileQuery();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,4 +31,3 @@ export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   // TODO: replace with a spinner or smth like that
   return <>{loading ? <div>Loading...</div> : children}</>;
 };
-

@@ -1,7 +1,7 @@
 import { useCallback, type FC } from 'react';
 import { useForm, type SubmitHandler, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLoginMutation } from '~/features/auth/api/AuthApiSlice';
+import { useLoginMutation } from '~/shared/auth/api/LoginApiSlice';
 import TextField from '~/shared/components/Form/TextField';
 import Checkbox from '~/shared/components/Form/Checkbox';
 import styles from './SignInPage.module.css';
@@ -10,11 +10,12 @@ import Button from '~/shared/components/Form/Button/Button';
 import {
   LoginBodySchema,
   type LoginBody,
-} from '~/features/auth/schema/LoginBodySchema';
+} from '~/shared/auth/schema/LoginBodySchema';
 import clsx from 'clsx';
 import { ReduxWrappedInvalidResponseSchema } from '~/shared/schema/InvalidResponseSchema';
 import { useNavigate } from 'react-router';
 import { ProfilePageConfig } from '../ProfilePage';
+import { DevTool as HookFormDevtools } from '@hookform/devtools';
 
 const SignInPage: FC = () => {
   const form = useForm<LoginBody>({
@@ -48,16 +49,15 @@ const SignInPage: FC = () => {
       // But api response is really badly designed so this is the only option,
       // apart from adding all error messages to root
 
-      const field =
-        (
-          {
-            'Error: User not found!': 'email',
-            'Error: Password is invalid': 'password',
-          } as const
-        )[error.data.data.message] ?? 'root';
+      const field = (
+        {
+          'Error: User not found!': 'email',
+          'Error: Password is invalid': 'password',
+        } satisfies Record<string, Parameters<typeof form.setError>[0]>
+      )[error.data.data.message];
 
       form.setError(
-        field,
+        field ?? 'root',
         { message: error.data.data.message },
         { shouldFocus: true }
       );
@@ -91,6 +91,7 @@ const SignInPage: FC = () => {
           </form>
         </FormProvider>
       </section>
+      <HookFormDevtools control={form.control} />
     </main>
   );
 };

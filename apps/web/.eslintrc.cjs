@@ -10,6 +10,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:jsx-a11y/recommended',
+    'plugin:react-redux/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -22,6 +23,7 @@ module.exports = {
     '@typescript-eslint',
     'jsx-a11y',
     'react-refresh',
+    'react-redux',
     'prettier',
   ],
   rules: {

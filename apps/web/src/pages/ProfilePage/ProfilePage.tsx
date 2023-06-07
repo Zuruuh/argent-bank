@@ -4,7 +4,7 @@ import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 import clsx from 'clsx';
 import { PrivateRoute } from '~/shared/guards/PrivateRoute';
-import { useProfileQuery } from '~/shared/slices/AuthenticatedApiSlice';
+import { useProfileQuery } from '~/shared/slices/user/ProfileApiSlice';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -25,7 +25,7 @@ const mockAccounts: AccountProps[] = [
 ];
 
 const ProfilePage: FC = () => {
-  const { data: profile } = useProfileQuery({}, {});
+  const { data: profile } = useProfileQuery();
 
   return (
     <PrivateRoute>
