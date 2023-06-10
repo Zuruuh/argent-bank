@@ -41,7 +41,7 @@ paths:
                   $ref: "#/components/schemas/object.transaction"
 
     post:
-      description: "Create a new"
+      description: "Create a new transaction"
       tags: ["Transactions"]
       security: [BearerAuth: []]
       requestBody:
