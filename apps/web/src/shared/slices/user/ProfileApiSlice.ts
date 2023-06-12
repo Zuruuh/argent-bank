@@ -2,12 +2,13 @@ import { User } from '~/shared/models/User';
 import { AuthenticatedApiSlice } from '../AuthenticatedApiSlice';
 import { ProfileResponseSchema } from '~/shared/schema/ProfileResponseSchema';
 import { queryHookEmptyParameterDecorator } from '~/shared/decorators/queryHookEmptyParameterDecorator';
+import { UpdateProfile } from '~/pages/ProfilePage/schemas/UpdateProfileSchema';
 
 const PROFILE_CACHE_KEY = '_self';
 
 export const ProfileApiSlice = AuthenticatedApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    profile: builder.query<User, Record<string, never>>({
+    getProfile: builder.query<User, Record<string, never>>({
       query: () => ({
         url: '/api/v1/user/profile',
         method: 'POST',
@@ -15,15 +16,28 @@ export const ProfileApiSlice = AuthenticatedApiSlice.injectEndpoints({
       transformResponse: (response) =>
         ProfileResponseSchema.parse(response).body,
     }),
+    updateProfile: builder.mutation<User, UpdateProfile>({
+      query: () => ({
+        url: '/api/v1/user/profile',
+        method: 'PUT',
+      }),
+      transformResponse: (response) =>
+        ProfileResponseSchema.parse(response).body,
+    }),
   }),
 }).enhanceEndpoints({
   addTagTypes: [PROFILE_CACHE_KEY],
-  endpoints: { profile: { providesTags: [PROFILE_CACHE_KEY] } },
+  endpoints: {
+    getProfile: { providesTags: [PROFILE_CACHE_KEY] },
+    updateProfile: { invalidatesTags: [PROFILE_CACHE_KEY] },
+  },
 });
 
 export const useProfileQuery = queryHookEmptyParameterDecorator(
-  ProfileApiSlice.useProfileQuery
+  ProfileApiSlice.useGetProfileQuery
 );
+
+export const useProfileMutation = ProfileApiSlice.useUpdateProfileMutation;
 
 export const clearProfileCache = () =>
   ProfileApiSlice.util.invalidateTags([PROFILE_CACHE_KEY]);

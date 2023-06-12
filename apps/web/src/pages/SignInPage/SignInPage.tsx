@@ -23,7 +23,7 @@ const SignInPage: FC = () => {
     mode: 'onTouched',
   });
 
-  const [doLogin, res] = useLoginMutation();
+  const [doLogin, loginResponse] = useLoginMutation();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginBody> = useCallback(
@@ -87,7 +87,7 @@ const SignInPage: FC = () => {
               formData={form.register('password')}
             />
             <Checkbox label="Remember me" name="remember-me" />
-            <Button label="Sign in" loading={res.isLoading} />
+            <Button label="Sign in" loading={loginResponse.isLoading} />
           </form>
         </FormProvider>
       </section>

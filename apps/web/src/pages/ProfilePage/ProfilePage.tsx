@@ -1,10 +1,21 @@
-import { type FC } from 'react';
+import { useState, type FC, useCallback } from 'react';
 import Account, { type AccountProps } from './components/Account';
 import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 import clsx from 'clsx';
 import { PrivateRoute } from '~/shared/guards/PrivateRoute';
-import { useProfileQuery } from '~/shared/slices/user/ProfileApiSlice';
+import {
+  useProfileMutation,
+  useProfileQuery,
+} from '~/shared/slices/user/ProfileApiSlice';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  UpdateProfile,
+  UpdateProfileSchema,
+} from './schemas/UpdateProfileSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Button from '~/shared/components/Form/Button/Button';
+import TextField from '~/shared/components/Form/TextField/TextField';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -25,18 +36,51 @@ const mockAccounts: AccountProps[] = [
 ];
 
 const ProfilePage: FC = () => {
-  const { data: profile } = useProfileQuery();
+  const [editing, setEditing] = useState<boolean>(false);
+  const [doProfileUpdate, res] = useProfileMutation();
+  const { data: profile, isLoading: isProfileLoading } = useProfileQuery();
+  const form = useForm<UpdateProfile>({
+    resolver: zodResolver(UpdateProfileSchema),
+    mode: 'onTouched',
+  });
+  const onSubmit: SubmitHandler<UpdateProfile> = useCallback(
+    async (body) => {
+      await doProfileUpdate(body);
+      setEditing(false);
+    },
+    [doProfileUpdate, setEditing]
+  );
+
+  if (isProfileLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <PrivateRoute>
       <main className={clsx(globals.main, globals.bgDark)}>
         <div className={styles.header}>
-          <h1>
-            Welcome back
-            <br />
-            {profile?.firstName} {profile?.lastName}!
-          </h1>
-          <button className={styles.editButton}>Edit Name</button>
+          <h1>Welcome back</h1>
+          <br />
+          {editing ? (
+            <FormProvider {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <Button label="Sign in" loading={res.isLoading} />
+                <Button label="cancel" />
+              </form>
+            </FormProvider>
+          ) : (
+            <>
+              <h1>
+                {profile.firstName} {profile.lastName}!
+              </h1>
+              <button
+                className={styles.editButton}
+                onClick={() => setEditing(true)}
+              >
+                Edit Name
+              </button>
+            </>
+          )}
         </div>
         <h2 className={globals.srOnly}>Accounts</h2>
         {mockAccounts.map((account, i) => (
