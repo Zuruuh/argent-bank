@@ -3,7 +3,6 @@ import Account, { type AccountProps } from './components/Account';
 import styles from './ProfilePage.module.css';
 import globals from '~/shared/assets/styles/globals.module.css';
 import clsx from 'clsx';
-import { PrivateRoute } from '~/shared/guards/PrivateRoute';
 import {
   useProfileMutation,
   useProfileQuery,
@@ -15,6 +14,8 @@ import {
 } from './schemas/UpdateProfileSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '~/shared/components/Form/Button/Button';
+import InlineField from '~/shared/components/Form/InlineField/InlineField';
+import { BUTTON_SIZES } from '~/shared/components/Form/Button/Button.types';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -41,11 +42,12 @@ const ProfilePage: FC = () => {
   const form = useForm<UpdateProfile>({
     resolver: zodResolver(UpdateProfileSchema),
     mode: 'onTouched',
+    values: { ...profile },
   });
   const onSubmit: SubmitHandler<UpdateProfile> = useCallback(
     async (body) => {
-      await doProfileUpdate(body);
       setEditing(false);
+      await doProfileUpdate(body);
     },
     [doProfileUpdate, setEditing]
   );
@@ -61,9 +63,36 @@ const ProfilePage: FC = () => {
         <br />
         {editing ? (
           <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Button label="Sign in" loading={res.isLoading} />
-              <Button label="cancel" />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className={styles.form}
+            >
+              <div className={styles.fieldsWrapper}>
+                <InlineField
+                  formData={form.register('firstName')}
+                  placeholder={'Prénom'}
+                />
+                <InlineField
+                  formData={form.register('lastName')}
+                  placeholder={'Nom'}
+                />
+              </div>
+              <div className={styles.buttonsWrapper}>
+                <Button
+                  label="Sign in"
+                  loading={res.isLoading}
+                  size={BUTTON_SIZES.SMALL}
+                />
+                <Button
+                  disabled={res.isLoading}
+                  label="Cancel"
+                  size={BUTTON_SIZES.SMALL}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setEditing(false);
+                  }}
+                />
+              </div>
             </form>
           </FormProvider>
         ) : (

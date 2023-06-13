@@ -8,10 +8,7 @@ export interface InlineFieldProps {
   formData: UseFormRegisterReturn;
 }
 
-export const InlineField: FC<InlineFieldProps> = ({
-  placeholder,
-  formData,
-}) => {
+const InlineField: FC<InlineFieldProps> = ({ placeholder, formData }) => {
   const fieldId = useId();
   const form = useFormContext();
 
@@ -37,3 +34,5 @@ export const InlineField: FC<InlineFieldProps> = ({
     </div>
   );
 };
+
+export default InlineField;

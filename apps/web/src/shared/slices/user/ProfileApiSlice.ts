@@ -17,19 +17,33 @@ export const ProfileApiSlice = AuthenticatedApiSlice.injectEndpoints({
         ProfileResponseSchema.parse(response).body,
     }),
     updateProfile: builder.mutation<User, UpdateProfile>({
-      query: () => ({
+      query: (body) => ({
         url: '/api/v1/user/profile',
         method: 'PUT',
+        body,
       }),
       transformResponse: (response) =>
         ProfileResponseSchema.parse(response).body,
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          ProfileApiSlice.util.updateQueryData('getProfile', {}, (draft) => {
+            draft.firstName = body.firstName;
+            draft.lastName = body.lastName;
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patch.undo();
+        }
+      },
     }),
   }),
 }).enhanceEndpoints({
   addTagTypes: [PROFILE_CACHE_KEY],
   endpoints: {
     getProfile: { providesTags: [PROFILE_CACHE_KEY] },
-    updateProfile: { invalidatesTags: [PROFILE_CACHE_KEY] },
   },
 });
 
