@@ -16,7 +16,6 @@ export const AuthenticatedApiSlice = createApi({
     }
 
     const { token } = state.data.token;
-    console.log(token);
 
     const response = await fetchBaseQuery({
       baseUrl: import.meta.env.VITE_API_URL,

@@ -23,7 +23,6 @@ export const LoginApiSlice = createApi({
       onQueryStarted(_, context) {
         context.queryFulfilled
           .then((response) => {
-              console.log('dispatching token')
             context.dispatch(setToken(response.data.body.token));
             context.dispatch(clearProfileCache());
           })

@@ -16,7 +16,6 @@ export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
     if (![profile, navigate].every(Boolean)) {
       return;
     }
-    console.log(profile);
 
     if (profile.isLoading) {
       return;
