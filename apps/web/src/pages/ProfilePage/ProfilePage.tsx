@@ -15,7 +15,6 @@ import {
 } from './schemas/UpdateProfileSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '~/shared/components/Form/Button/Button';
-import TextField from '~/shared/components/Form/TextField/TextField';
 
 const mockAccounts: AccountProps[] = [
   {
@@ -56,38 +55,36 @@ const ProfilePage: FC = () => {
   }
 
   return (
-    <PrivateRoute>
-      <main className={clsx(globals.main, globals.bgDark)}>
-        <div className={styles.header}>
-          <h1>Welcome back</h1>
-          <br />
-          {editing ? (
-            <FormProvider {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Button label="Sign in" loading={res.isLoading} />
-                <Button label="cancel" />
-              </form>
-            </FormProvider>
-          ) : (
-            <>
-              <h1>
-                {profile.firstName} {profile.lastName}!
-              </h1>
-              <button
-                className={styles.editButton}
-                onClick={() => setEditing(true)}
-              >
-                Edit Name
-              </button>
-            </>
-          )}
-        </div>
-        <h2 className={globals.srOnly}>Accounts</h2>
-        {mockAccounts.map((account, i) => (
-          <Account {...account} key={i} />
-        ))}
-      </main>
-    </PrivateRoute>
+    <main className={clsx(globals.main, globals.bgDark)}>
+      <div className={styles.header}>
+        <h1>Welcome back</h1>
+        <br />
+        {editing ? (
+          <FormProvider {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <Button label="Sign in" loading={res.isLoading} />
+              <Button label="cancel" />
+            </form>
+          </FormProvider>
+        ) : (
+          <>
+            <h1>
+              {profile.firstName} {profile.lastName}!
+            </h1>
+            <button
+              className={styles.editButton}
+              onClick={() => setEditing(true)}
+            >
+              Edit Name
+            </button>
+          </>
+        )}
+      </div>
+      <h2 className={globals.srOnly}>Accounts</h2>
+      {mockAccounts.map((account, i) => (
+        <Account {...account} key={i} />
+      ))}
+    </main>
   );
 };
 

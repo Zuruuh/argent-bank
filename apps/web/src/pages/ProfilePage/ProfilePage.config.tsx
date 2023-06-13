@@ -5,6 +5,7 @@ const ProfilePage = lazy(() => import('./ProfilePage'));
 
 export const ProfilePageConfig = {
   path: '/profile',
+  private: true,
   element: (
     <Suspense fallback={<p>Loading...</p>}>
       <ProfilePage />

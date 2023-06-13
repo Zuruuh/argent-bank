@@ -3,11 +3,9 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { rememberEnhancer, rememberReducer } from 'redux-remember';
 import { LoginApiSlice } from '~/shared/auth/api/LoginApiSlice';
 import { TokenSlice } from '~/shared/auth/slices/TokenSlice';
-import { AuthenticatedApiSlice } from './slices/AuthenticatedApiSlice';
 import { ProfileApiSlice } from './slices/user/ProfileApiSlice';
 
 const reducers = {
-  // [AuthenticatedApiSlice.reducerPath]: AuthenticatedApiSlice.reducer,
   [LoginApiSlice.reducerPath]: LoginApiSlice.reducer,
   [TokenSlice.name]: TokenSlice.reducer,
   [ProfileApiSlice.reducerPath]: ProfileApiSlice.reducer,
@@ -21,7 +19,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(LoginApiSlice.middleware)
-      .concat(AuthenticatedApiSlice.middleware),
+      .concat(ProfileApiSlice.middleware),
   devTools: import.meta.env.DEV,
   enhancers: [
     rememberEnhancer(localStorage, persistedKeys, { persistWholeStore: true }),
