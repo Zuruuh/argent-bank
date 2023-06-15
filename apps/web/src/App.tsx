@@ -5,7 +5,7 @@ import { HomePageConfig } from './pages/HomePage';
 import { SignInPageConfig } from './pages/SignInPage';
 import { ProfilePageConfig } from './pages/ProfilePage';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './shared/store';
+import { createStore } from './shared/store';
 import Layout from './shared/components/Layout';
 import type { PageConfig } from './shared/types/PageConfig';
 import { PrivateRoute } from './shared/guards/PrivateRoute';
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
 
 const App: FC = () => {
   return (
-    <ReduxProvider store={store}>
+    <ReduxProvider store={createStore()}>
       <RouterProvider router={router} />
     </ReduxProvider>
   );

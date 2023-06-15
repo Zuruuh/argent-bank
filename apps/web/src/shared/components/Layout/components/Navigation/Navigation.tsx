@@ -13,6 +13,7 @@ import { useSignOut } from '~/shared/hooks/auth/useSignOut';
 const Navigation: FC = () => {
   const profile = useProfileQuery();
   const signOut = useSignOut();
+  console.log(profile);
 
   return (
     <nav className={styles.navigation}>

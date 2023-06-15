@@ -1,15 +1,16 @@
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { DecoratorProvider, DecoratorProps } from './Decorator.types';
+import { Decorator } from './Decorator.types';
+import { createProvider } from './createProvider';
 
-type DecoratorProviderProps = { element: JSX.Element; currentPath?: string };
+type DecoratorProps = { currentPath?: string };
 
-export const withCurrentRoute = (
-  { story, props = {} }: DecoratorProps,
-  { element, currentPath = '/' }: DecoratorProviderProps
+const withCurrentRoute: Decorator<DecoratorProps> = (
+  element,
+  { currentPath = '/' }
 ): JSX.Element => (
   <MemoryRouter initialEntries={[currentPath]}>
     <Routes>
-      <Route path="*" element={story(props)}>
+      <Route path="*" element={element}>
         <Route
           path={currentPath === '/' ? '*' : `*/${currentPath}`}
           element={element}
@@ -19,7 +20,4 @@ export const withCurrentRoute = (
   </MemoryRouter>
 );
 
-export const withCurrentRouteProvider: DecoratorProvider<
-  DecoratorProviderProps
-> = (providerProps) => (story, props) =>
-  withCurrentRoute({ story, props }, providerProps);
+export const withCurrentRouteProvider = createProvider(withCurrentRoute);

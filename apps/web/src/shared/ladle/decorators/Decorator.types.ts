@@ -1,13 +1,17 @@
-import type { StoryDecorator } from '@ladle/react';
-import type { FC } from 'react';
+import { FC, ReactElement, ReactNode } from 'react';
 
-type EmptyObject = Record<PropertyKey, unknown>;
+export type StoryDecorator = (
+  element: FC<Partial<Record<PropertyKey, unknown>>>,
+  props: Record<PropertyKey, unknown>
+) => ReactElement;
+
+type AnyObject = Record<PropertyKey, unknown>;
+
+export type Decorator<TProps extends AnyObject | undefined = undefined> =
+  TProps extends undefined
+    ? (element: ReactNode) => ReactElement
+    : (element: ReactNode, props: TProps) => ReactElement;
 
 export type DecoratorProvider<TData = undefined> = TData extends undefined
   ? () => StoryDecorator
   : (data: TData) => StoryDecorator;
-
-export type DecoratorProps<T extends EmptyObject = EmptyObject> = {
-  story: FC<Partial<T>>;
-  props: Partial<T>;
-};

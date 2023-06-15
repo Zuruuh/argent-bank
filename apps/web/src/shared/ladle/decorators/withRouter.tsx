@@ -1,9 +1,7 @@
 import { MemoryRouter } from 'react-router';
-import type { DecoratorProvider, DecoratorProps } from './Decorator.types';
+import type { Decorator } from './Decorator.types';
+import { createProvider } from './createProvider';
 
-export const withRouter = ({ story, props }: DecoratorProps): JSX.Element => (
-  <MemoryRouter>{story(props)}</MemoryRouter>
-);
+const withRouter: Decorator = (story) => <MemoryRouter>{story}</MemoryRouter>;
 
-export const withRouterProvider: DecoratorProvider = () => (story, props) =>
-  withRouter({ story, props });
+export const withRouterProvider = createProvider(withRouter);
