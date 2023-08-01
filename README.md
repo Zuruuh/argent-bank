@@ -13,6 +13,9 @@ For detailled setup instructions, check [the web app's readme](apps/web/README.m
 
 ## Api
 
+> Disclaimer:  
+> I did not code the api part; it was provided by openclassrooms (so you should probably only check the `web` folder)
+
 The api provides a [docker compose](https://www.docker.com/products/docker-desktop/) file to simply run it without having to install all services and dependencies.  
 This is the recommended way of running the api, but you can also install everything manually:
 
