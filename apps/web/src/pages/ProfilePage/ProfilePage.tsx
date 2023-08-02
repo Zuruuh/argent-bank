@@ -79,7 +79,7 @@ const ProfilePage: FC = () => {
               </div>
               <div className={styles.buttonsWrapper}>
                 <Button
-                  label="Sign in"
+                  label="Save"
                   loading={res.isLoading}
                   size={BUTTON_SIZES.SMALL}
                 />

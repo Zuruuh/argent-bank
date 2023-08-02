@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  api:
+    image: zuruh/argent-bank-api:latest
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/server.dockerfile
+    depends_on:
+      - database
+    environment:
+      SERVER_PORT: 3000
+      DATABASE_HOST: database
+      DATABASE_URL: "mongodb://database:/argentbank"
+    ports:
+      - "9020:3000"
+
+  database:
+    image: mongo:5.0
+    restart: unless-stopped
+    healthcheck:
+      test: mongo --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
+      interval: 1s
+      retries: 15
+      start_period: 5s
+      timeout: 10s
+    environment:
+      MONGO_INITDB_DATABASE: argentbank
+    expose:
+      - "27017"
